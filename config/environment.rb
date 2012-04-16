@@ -51,6 +51,10 @@ Rails::Initializer.run do |config|
   config.action_mailer.perform_deliveries = false
 
   config.gem 'rubytree', :lib => 'tree'
+
+  # Enable hoptoad for error notification
+  config.gem 'hoptoad_notifier'
+
   config.gem 'coderay', :version => '~>0.9.7'
   
   # Load any local configuration that is kept out of source control
