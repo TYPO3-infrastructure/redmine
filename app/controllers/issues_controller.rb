@@ -126,7 +126,7 @@ class IssuesController < ApplicationController
   def new
     respond_to do |format|
       format.html { render :action => 'new', :layout => !request.xhr? }
-      format.js { render :partial => 'attributes' }
+      format.js { render :template => 'issues/new.rhtml', :layout => FALSE }
     end
   end
 

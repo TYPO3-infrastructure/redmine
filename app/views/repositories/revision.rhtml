@@ -24,7 +24,7 @@
 <p><% if @changeset.scmid %>ID: <%= @changeset.scmid %><br /><% end %>
 <span class="author"><%= authoring(@changeset.committed_on, @changeset.author) %></span></p>
 
-<%= textilizable @changeset.comments %>
+<%= textilizable h @changeset.comments %>
 
 <% if @changeset.issues.visible.any? %>
 <h3><%= l(:label_related_issues) %></h3>

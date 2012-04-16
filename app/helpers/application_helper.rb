@@ -61,6 +61,45 @@ module ApplicationHelper
     end
   end
 
+  # Display a link to user's account page with IMAGE
+  def link_to_user_with_image(user, size=0)
+    if user
+      completeLink = output_user_image user, size
+      completeLink << link_to(user, :controller => 'users', :action => 'show', :id => user)
+      if size == 1
+        completeLink << " (#{user.login})"
+      end
+      completeLink  # return it
+    else
+      'Anonymous'
+    end
+  end
+
+  # output the user image
+  def output_user_image(user, size=0)
+    imageSize = case size
+      when 0 then "small"
+      when 1 then "mid"
+      when 2 then "big"
+    end
+    if ! (user.img_hash.nil? || user.img_hash=='')
+      imageFile = user.img_hash
+    else
+      imageFile = '_dummy'
+    end
+    userimage = "http://typo3.org/fileadmin/userimages/#{imageFile}-#{imageSize}.jpg"
+    "<img src='#{userimage}' class='userimage userimage-#{size}' />"
+  end
+
+  # format a mail link to current user. only shown if a user is currently logged in
+  def format_mail(user)
+    if User.current.logged?
+      mail_to user.mail unless user.pref.hide_mail
+    else
+      "***@***.***"
+    end
+  end
+
   # Displays a link to +issue+ with its subject.
   # Examples:
   # 
@@ -569,6 +608,7 @@ module ApplicationHelper
   # Examples:
   #   Issues:
   #     #52 -> Link to issue #52
+  #     #M52 -> Link to Mantis issue #52
   #   Changesets:
   #     r52 -> Link to revision 52
   #     commit:a85130f -> Link to scmid starting with a85130f
@@ -591,7 +631,7 @@ module ApplicationHelper
   #  Forum messages:
   #     message#1218 -> Link to message with id 1218
   def parse_redmine_links(text, project, obj, attr, only_path, options)
-    text.gsub!(%r{([\s\(,\-\[\>]|^)(!)?(attachment|document|version|commit|source|export|message|project)?((#|r)(\d+)|(:)([^"\s<>][^\s<>]*?|"[^"]+?"))(?=(?=[[:punct:]]\W)|,|\s|\]|<|$)}) do |m|
+    text.gsub!(%r{([\s\(,\-\[\>]|^)(!)?(attachment|document|version|commit|source|export|message|project)?((#|#M|r)(\d+)|(:)([^"\s<>][^\s<>]*?|"[^"]+?"))(?=(?=[[:punct:]]\W)|,|\s|\]|<|$)}) do |m|
       leading, esc, prefix, sep, identifier = $1, $2, $3, $5 || $7, $6 || $8
       link = nil
       if esc.nil?
@@ -601,6 +641,10 @@ module ApplicationHelper
                                       :class => 'changeset',
                                       :title => truncate_single_line(changeset.comments, :length => 100))
           end
+        elsif sep == '#M'
+          # Link to a Mantis issue
+          oid = identifier.to_i
+          link = link_to("#M#{oid}", "http://bugs.typo3.org/view.php?id=" + identifier)
         elsif sep == '#'
           oid = identifier.to_i
           case prefix
@@ -753,6 +797,7 @@ module ApplicationHelper
   def labelled_tabular_form_for(name, object, options, &proc)
     options[:html] ||= {}
     options[:html][:class] = 'tabular' unless options[:html].has_key?(:class)
+    options[:html][:multipart] = true
     form_for(name, object, options.merge({ :builder => TabularFormBuilder, :lang => current_language}), &proc)
   end
 

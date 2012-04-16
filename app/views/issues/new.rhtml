@@ -4,6 +4,11 @@
                              :html => {:multipart => true, :id => 'issue-form', :class => 'tabular new-issue-form'} do |f| %>
     <%= error_messages_for 'issue' %>
     <div class="box">
+    <p><%= f.select "project_id", project_tree_options_for_select(Project.visible.all, :selected => @issue.project), :required => true %></p>
+    <%= observe_field :issue_project_id, :url => { :action => :new, :project_id => @project, :id => @issue },
+                                         :update => 'content',
+                                         :with => "Form.serialize('issue-form')" %>
+
     <%= render :partial => 'issues/form', :locals => {:f => f} %>
     </div>
     <%= submit_tag l(:button_create) %>

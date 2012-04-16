@@ -6,7 +6,8 @@ ActionController::Routing::Routes.draw do |map|
   # map.connect 'products/:id', :controller => 'catalog', :action => 'view'
   # Keep in mind you can assign values other than :controller and :action
 
-  map.home '', :controller => 'welcome'
+  # Override home for Forge start page
+  map.home '', :controller => 'start'
   
   map.signin 'login', :controller => 'account', :action => 'login'
   map.signout 'logout', :controller => 'account', :action => 'logout'

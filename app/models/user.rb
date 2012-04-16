@@ -120,7 +120,7 @@ class User < Principal
         return nil unless user.auth_source.authenticate(login, password)
       else
         # authentication with local password
-        return nil unless User.hash_password(password) == user.hashed_password        
+        return nil unless User.password_matches?(login, password)        
       end
     else
       # user is not yet registered, try to authenticate with available sources
@@ -488,6 +488,20 @@ class User < Principal
   def self.hash_password(clear_password)
     Digest::SHA1.hexdigest(clear_password || "")
   end
+
+  def self.password_matches?(username, cleartext_password)
+   f = IO.popen("/home/forge/svn-helpers/apache-svn-authenticator.php", "w+");
+   f.puts(username)
+   f.puts(cleartext_password)
+   f.close_write
+   Process.wait
+   if $? == 0
+     return true
+   else
+     return false
+   end
+  end
+
 end
 
 class AnonymousUser < User

@@ -15,6 +15,8 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
+require "digest/md5"
+
 class Project < ActiveRecord::Base
   include Redmine::SafeAttributes
   
@@ -49,6 +51,11 @@ class Project < ActiveRecord::Base
   has_one :repository, :dependent => :destroy
   has_many :changesets, :through => :repository
   has_one :wiki, :dependent => :destroy
+
+  cattr_accessor :storage_path
+  @@storage_path = "#{RAILS_ROOT}/files"
+  after_save :write_file
+
   # Custom field for the project issues
   has_and_belongs_to_many :issue_custom_fields, 
                           :class_name => 'IssueCustomField',
@@ -75,7 +82,7 @@ class Project < ActiveRecord::Base
   validates_length_of :homepage, :maximum => 255
   validates_length_of :identifier, :in => 1..IDENTIFIER_MAX_LENGTH
   # donwcase letters, digits, dashes but not digits only
-  validates_format_of :identifier, :with => /^(?!\d+$)[a-z0-9\-]*$/, :if => Proc.new { |p| p.identifier_changed? }
+  validates_format_of :identifier, :with => /^(?!\d+$)[a-z0-9\-_]*$/, :if => Proc.new { |p| p.identifier_changed? }
   # reserved words
   validates_exclusion_of :identifier, :in => %w( new )
 
@@ -110,6 +117,17 @@ class Project < ActiveRecord::Base
   
   def identifier_frozen?
     errors[:identifier].nil? && !(new_record? || identifier.blank?)
+  end
+
+  def topbarheaderimage=(file_data)
+    @file_data = file_data
+  end
+
+  def write_file
+    if @file_data.respond_to?('original_filename')
+      File.open("#{RAILS_ROOT}/public/images/headerimages/#{id}.jpg", "wb") { |file| file.write(@file_data.read) }
+      # put calls to other logic here - resizing, conversion etc.
+    end
   end
 
   # returns latest created projects
