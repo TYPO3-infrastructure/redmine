@@ -59,6 +59,8 @@ module Redmine
     
     def valid_languages
       @@valid_languages ||= Dir.glob(File.join(RAILS_ROOT, 'config', 'locales', '*.yml')).collect {|f| File.basename(f).split('.').first}.collect(&:to_sym)
+      # HACK: we only want the english language.
+      @@valid_languages = [:en]
     end
     
     def find_language(lang)
