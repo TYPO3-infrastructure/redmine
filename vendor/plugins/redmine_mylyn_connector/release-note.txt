@@ -1,0 +1,33 @@
+Version 2.6.4 (in progress...)
+  bugfix: shared versions
+  bugfix: ignored Settings.issue_done_ratio
+  bugfix: use version.open instead of version.completed
+
+Version 2.6.3
+  bugfix: Missing CustomField-Attribute forAll
+
+Version 2.6.2
+  bugfix: IssueCustomFields without assigned Tracker(s)
+  bugfix: Changes for Redmine 0.9
+
+Version 2.6.1
+  bugfix: Compatibility with Redmine 0.8.7
+
+Version 2.6
+  Startdate + Duedate
+  Watchers
+  TimeTracking / Spenttime
+  CrossProjectQueries
+
+Version 2.5.3
+  Bugfix: IssueRelations 'delay' is now optional
+
+Version 2.5.2
+  Bugfix: Detailed Status-Header for server errors
+
+Version 2.5.1
+  Bugfix: Project related filter (version, category)
+
+Version 2.5.0
+  Support of Redmine 0.8 and upcoming 0.9
+
