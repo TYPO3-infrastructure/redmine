@@ -1,3 +1,6 @@
 [submodule "vendor/plugins/redmine_vote"]
 	path = vendor/plugins/redmine_vote
 	url = git://github.com/Lamar/redmine_vote.git
+[submodule "vendor/plugins/redmine_wiki_css"]
+	path = vendor/plugins/redmine_wiki_css
+	url = git://github.com/meineerde/redmine_wiki_css.git
