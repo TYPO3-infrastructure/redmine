@@ -1,0 +1,3 @@
+[submodule "vendor/plugins/redmine_vote"]
+	path = vendor/plugins/redmine_vote
+	url = git://github.com/Lamar/redmine_vote.git
