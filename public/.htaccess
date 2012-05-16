@@ -40,6 +40,9 @@ RewriteEngine On
 # Skip rewriting in /scripts/
 RewriteRule ^scripts/ - [L]
 
+# Redirect old (renamed) project URLs
+RewriteRule ^projects/team-infrastructure(.*)$ /projects/team-server-public$1 [R=301,L]
+
 # If your Rails application is accessed via an Alias directive,
 # then you MUST also set the RewriteBase in this htaccess file.
 #
