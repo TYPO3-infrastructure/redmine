@@ -16,6 +16,7 @@
 /log/mongrel_debug
 /public/dispatch.*
 /public/plugin_assets
+/public/images/headerimages*
 /tmp/*
 /tmp/cache/*
 /tmp/sessions/*
@@ -24,8 +25,6 @@
 /vendor/cache
 /vendor/rails
 *.rbc
-
 /.bundle
 /Gemfile.lock
 /Gemfile.local
-
