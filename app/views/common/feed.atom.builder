@@ -18,6 +18,7 @@ xml.feed "xmlns" => "http://www.w3.org/2005/Atom" do
       xml.link "rel" => "alternate", "href" => url
       xml.id url
       xml.updated item.event_datetime.xmlschema
+      author = item.committer if item.respond_to?(:committer)
       author = item.event_author if item.respond_to?(:event_author)
       xml.author do
         xml.name(author)

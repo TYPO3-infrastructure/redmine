@@ -5,7 +5,9 @@
 </div>
 
 <h2><%= render :partial => 'breadcrumbs',
-               :locals => { :path => @path, :kind => 'dir', :revision => @rev } %></h2>
+  :locals => { :path => @path, :kind => 'dir', :revision => @rev } %></h2>
+
+<p>You can find the Subversion repository at <b><%= @repository.url %></b></p>
 
 <% if !@entries.nil? && authorize_for('repositories', 'browse') %>
   <%= render :partial => 'dir_list' %>

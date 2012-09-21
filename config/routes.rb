@@ -6,7 +6,8 @@ ActionController::Routing::Routes.draw do |map|
   # map.connect 'products/:id', :controller => 'catalog', :action => 'view'
   # Keep in mind you can assign values other than :controller and :action
 
-  map.home '', :controller => 'welcome', :conditions => {:method => :get}
+  # Override home for Forge start page
+  map.home '', :controller => 'start'
 
   map.signin 'login', :controller => 'account', :action => 'login',
              :conditions => {:method => [:get, :post]}
@@ -19,10 +20,20 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'account/activate', :controller => 'account', :action => 'activate',
               :conditions => {:method => :get}
 
+  map.connect 'roles/workflow/:id/:role_id/:tracker_id', :controller => 'roles', :action => 'workflow'
+  map.connect 'help/:ctrl/:page', :controller => 'help'
+
   map.connect 'projects/:id/wiki', :controller => 'wikis',
               :action => 'edit', :conditions => {:method => :post}
   map.connect 'projects/:id/wiki/destroy', :controller => 'wikis',
               :action => 'destroy', :conditions => {:method => [:get, :post]}
+
+  map.connect 'projects/:project_id/time_entries/report', :controller => 'time_entry_reports', :action => 'report'
+  map.with_options :controller => 'time_entry_reports', :action => 'report',:conditions => {:method => :get} do |time_report|
+    time_report.connect 'time_entries/report'
+    time_report.connect 'time_entries/report.:format'
+    time_report.connect 'projects/:project_id/time_entries/report.:format'
+  end
 
   map.with_options :controller => 'messages' do |messages_routes|
     messages_routes.with_options :conditions => {:method => :get} do |messages_views|

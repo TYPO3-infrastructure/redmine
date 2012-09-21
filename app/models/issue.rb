@@ -180,13 +180,37 @@ class Issue < ActiveRecord::Base
 
   # Moves/copies an issue to a new project and tracker
   # Returns the moved/copied issue on success, false on failure
-  def move_to_project(new_project, new_tracker=nil, options={})
-    ActiveSupport::Deprecation.warn "Issue#move_to_project is deprecated, use #project= instead."
-
-    if options[:copy]
-      issue = self.copy
-    else
-      issue = self
+  def move_to_project(*args)
+    ret = Issue.transaction do
+      move_to_project_without_transaction(*args) || raise(ActiveRecord::Rollback)
+    end || false
+  end
+  
+  def move_to_project_without_transaction(new_project, new_tracker = nil, options = {})
+    options ||= {}
+    issue = options[:copy] ? self.class.new.copy_from(self) : self
+    
+    if new_project && issue.project_id != new_project.id
+      # delete issue relations
+      unless Setting.cross_project_issue_relations?
+        issue.relations_from.clear
+        issue.relations_to.clear
+      end
+      # issue is moved to another project
+      # reassign to the category with same name if any
+      new_category = issue.category.nil? ? nil : new_project.issue_categories.find_by_name(issue.category.name)
+      issue.category = new_category
+      # Keep the fixed_version if it's still valid in the new_project
+      unless new_project.shared_versions.include?(issue.fixed_version)
+        issue.fixed_version = nil
+      end
+      issue.project = new_project
+      # keep the parent issue dude!
+      unless Setting.cross_project_issue_relations?
+        if issue.parent && issue.parent.project_id != issue.project_id
+          issue.parent_issue_id = nil
+        end
+      end
     end
 
     issue.init_journal(User.current, options[:notes])
@@ -421,16 +445,18 @@ class Issue < ActiveRecord::Base
 
     # Checks parent issue assignment
     if @parent_issue
-      if @parent_issue.project_id != project_id
-        errors.add :parent_issue_id, :not_same_project
-      elsif !new_record?
-        # moving an existing issue
-        if @parent_issue.root_id != root_id
-          # we can always move to another tree
-        elsif move_possible?(@parent_issue)
-          # move accepted inside tree
-        else
-          errors.add :parent_issue_id, :not_a_valid_parent
+      unless Setting.cross_project_issue_relations?
+        if @parent_issue.project_id != project_id
+          errors.add :parent_issue_id, :not_same_project
+        elsif !new_record?
+          # moving an existing issue
+          if @parent_issue.root_id != root_id
+            # we can always move to another tree
+          elsif move_possible?(@parent_issue)
+            # move accepted inside tree
+          else
+            errors.add :parent_issue_id, :not_a_valid_parent
+          end
         end
       end
     end

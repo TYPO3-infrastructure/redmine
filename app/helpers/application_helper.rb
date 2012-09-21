@@ -63,6 +63,45 @@ module ApplicationHelper
     end
   end
 
+  # Display a link to user's account page with IMAGE
+  def link_to_user_with_image(user, size=0)
+    if user
+      completeLink = output_user_image user, size
+      completeLink << link_to(user, :controller => 'users', :action => 'show', :id => user)
+      if size == 1
+        completeLink << " (#{user.login})"
+      end
+      completeLink  # return it
+    else
+      'Anonymous'
+    end
+  end
+
+  # output the user image
+  def output_user_image(user, size=0)
+    imageSize = case size
+      when 0 then "small"
+      when 1 then "mid"
+      when 2 then "big"
+    end
+    if ! (user.img_hash.nil? || user.img_hash=='')
+      imageFile = user.img_hash
+    else
+      imageFile = '_dummy'
+    end
+    userimage = "http://typo3.org/fileadmin/userimages/#{imageFile}-#{imageSize}.jpg"
+    "<img src='#{userimage}' class='userimage userimage-#{size}' />"
+  end
+
+  # format a mail link to current user. only shown if a user is currently logged in
+  def format_mail(user)
+    if User.current.logged?
+      mail_to user.mail unless user.pref.hide_mail
+    else
+      "***@***.***"
+    end
+  end
+
   # Displays a link to +issue+ with its subject.
   # Examples:
   #
@@ -640,6 +679,7 @@ module ApplicationHelper
   # Examples:
   #   Issues:
   #     #52 -> Link to issue #52
+  #     #M52 -> Link to Mantis issue #52
   #   Changesets:
   #     r52 -> Link to revision 52
   #     commit:a85130f -> Link to scmid starting with a85130f
@@ -668,8 +708,8 @@ module ApplicationHelper
   #     identifier:version:1.0.0
   #     identifier:source:some/file
   def parse_redmine_links(text, project, obj, attr, only_path, options)
-    text.gsub!(%r{([\s\(,\-\[\>]|^)(!)?(([a-z0-9\-_]+):)?(attachment|document|version|forum|news|message|project|commit|source|export)?(((#)|((([a-z0-9\-]+)\|)?(r)))((\d+)((#note)?-(\d+))?)|(:)([^"\s<>][^\s<>]*?|"[^"]+?"))(?=(?=[[:punct:]][^A-Za-z0-9_/])|,|\s|\]|<|$)}) do |m|
-      leading, esc, project_prefix, project_identifier, prefix, repo_prefix, repo_identifier, sep, identifier, comment_suffix, comment_id = $1, $2, $3, $4, $5, $10, $11, $8 || $12 || $18, $14 || $19, $15, $17
+    text.gsub!(%r{([\s\(,\-\[\>]|^)(!)?(attachment|document|version|commit|source|export|message|project)?((#|#M|r)(\d+)|(:)([^"\s<>][^\s<>]*?|"[^"]+?"))(?=(?=[[:punct:]]\W)|,|\s|\]|<|$)}) do |m|
+      leading, esc, prefix, sep, identifier = $1, $2, $3, $5 || $7, $6 || $8
       link = nil
       if project_identifier
         project = Project.visible.find_by_identifier(project_identifier)
@@ -690,6 +730,10 @@ module ApplicationHelper
                                         :title => truncate_single_line(changeset.comments, :length => 100))
             end
           end
+        elsif sep == '#M'
+          # Link to a Mantis issue
+          oid = identifier.to_i
+          link = link_to("#M#{oid}", "http://bugs.typo3.org/view.php?id=" + identifier)
         elsif sep == '#'
           oid = identifier.to_i
           case prefix
@@ -925,8 +969,13 @@ module ApplicationHelper
     options = args.last
     options[:html] ||= {}
     options[:html][:class] = 'tabular' unless options[:html].has_key?(:class)
+<<<<<<< HEAD
     options.merge!({:builder => Redmine::Views::LabelledFormBuilder})
     form_for(*args, &proc)
+=======
+    options[:html][:multipart] = true
+    form_for(name, object, options.merge({ :builder => TabularFormBuilder, :lang => current_language}), &proc)
+>>>>>>> 273eee7... app, core patches and adoptions
   end
 
   def labelled_form_for(*args, &proc)
