@@ -4,7 +4,48 @@ Disallow: /projects/<%= p.to_param %>/repository
 Disallow: /projects/<%= p.to_param %>/issues
 Disallow: /projects/<%= p.to_param %>/activity
 <% end -%>
+Disallow: /issues?per_page=
+Disallow: /issues?query_id=
+Disallow: /issues?sort=
 Disallow: /issues/gantt
 Disallow: /issues/calendar
 Disallow: /activity
 Disallow: /search
+Disallow: /login
+Disallow: /search
+Disallow: /api
+Disallow: /hudson
+Disallow: /rb
+Disallow: /time_entries
+Disallow: /time_entries.csv
+Disallow: /versions
+Disallow: /*/wiki/*?*version=
+
+Disallow: /projects/*/wiki/*/history?
+
+Disallow: /issues/*.pdf
+Disallow: /issues/*.atom
+Disallow: /issues/auto_complete
+
+Disallow: /*issues/activity
+Disallow: /*issues/calendar
+Disallow: /*issues/gantt
+Disallow: /*issues/report
+Disallow: /*issues/*/time_entries
+Disallow: /*issues?category_id=*
+Disallow: /*issues?fixed_version_id=*
+Disallow: /*issues?page=*&*
+Disallow: /*issues?per_page=*
+Disallow: /*issues?query_id=*
+Disallow: /*issues?set_filter=*
+Disallow: /*issues?sort=*
+Disallow: /*issues?sort_key=*
+
+Disallow: /projects/new?
+Disallow: /projects/*/activity
+Disallow: /projects/*/calendar
+Disallow: /projects/*/repository
+Disallow: /projects/*/versions
+
+user-agent: AhrefsBot
+Disallow: /
