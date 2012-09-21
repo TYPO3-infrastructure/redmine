@@ -1035,3 +1035,11 @@ en:
   description_date_range_interval: Choose range by selecting start and end date
   description_date_from: Enter start date
   description_date_to: Enter end date
+  field_quicklinks: Quicklinks
+  field_topbarbackgroundcolor: Topbar Background Color (CSS Colors)
+  field_topbartextcolor: Topbar Text Color (CSS Colors)
+  field_topbarheaderimage: Header Image
+  field_sorting: Sorting
+
+  project_module_documents: Internal Documents
+  label_document_plural: Internal Documents
