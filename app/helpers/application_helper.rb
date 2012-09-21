@@ -709,7 +709,7 @@ module ApplicationHelper
   #     identifier:source:some/file
   def parse_redmine_links(text, project, obj, attr, only_path, options)
     text.gsub!(%r{([\s\(,\-\[\>]|^)(!)?(attachment|document|version|commit|source|export|message|project)?((#|#M|r)(\d+)|(:)([^"\s<>][^\s<>]*?|"[^"]+?"))(?=(?=[[:punct:]]\W)|,|\s|\]|<|$)}) do |m|
-      leading, esc, prefix, sep, identifier = $1, $2, $3, $5 || $7, $6 || $8
+      leading, esc, project_prefix, project_identifier, prefix, repo_prefix, repo_identifier, sep, identifier, comment_suffix, comment_id = $1, $2, $3, $4, $5, $10, $11, $8 || $12 || $18, $14 || $19, $15, $17
       link = nil
       if project_identifier
         project = Project.visible.find_by_identifier(project_identifier)
@@ -969,13 +969,8 @@ module ApplicationHelper
     options = args.last
     options[:html] ||= {}
     options[:html][:class] = 'tabular' unless options[:html].has_key?(:class)
-<<<<<<< HEAD
-    options.merge!({:builder => Redmine::Views::LabelledFormBuilder})
-    form_for(*args, &proc)
-=======
     options[:html][:multipart] = true
     form_for(name, object, options.merge({ :builder => TabularFormBuilder, :lang => current_language}), &proc)
->>>>>>> 273eee7... app, core patches and adoptions
   end
 
   def labelled_form_for(*args, &proc)

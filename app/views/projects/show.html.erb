@@ -70,12 +70,18 @@
       <h3 class="icon22 icon22-users"><%=l(:label_member_plural)%></h3>
       <% @users_by_role.keys.sort_by{|role|
         result = case role.name
-                 when 'Leader': 1
-                 when 'Co-Leader': 5
-                 when 'Member': 10
-                 when 'Inactive Member':15
-                 when 'Pending Member':20
-                 else 100
+                 when 'Leader'
+                   1
+                 when 'Co-Leader'
+                   5
+                 when 'Member'
+                   10
+                 when 'Inactive Member'
+                   15
+                 when 'Pending Member'
+                   20
+                 else
+                   100
                  end
         result
       }.each do |role| %>
