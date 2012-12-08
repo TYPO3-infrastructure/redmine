@@ -13,9 +13,6 @@
 [submodule "vendor/plugins/flow_svn_permissions"]
 	path = vendor/plugins/flow_svn_permissions
 	url = git@github.com:typo3/rm_flow_svn_permissions
-[submodule "vendor/plugins/forge_continuous_integration"]
-	path = vendor/plugins/forge_continuous_integration
-	url = git@github.com:typo3/rm_forge_continuous_integration
 [submodule "vendor/plugins/forge_engines_patches"]
 	path = vendor/plugins/forge_engines_patches
 	url = git@github.com:typo3/rm_forge_engines_patches
