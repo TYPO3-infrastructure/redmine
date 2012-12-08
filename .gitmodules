@@ -1,6 +1,3 @@
-[submodule "vendor/plugins/flow_api"]
-	path = vendor/plugins/flow_api
-	url = git@github.com:typo3/rm_flow_api
 [submodule "vendor/plugins/flow_design_helpers"]
 	path = vendor/plugins/flow_design_helpers
 	url = git@github.com:typo3/rm_flow_design_helpers
