@@ -13,6 +13,7 @@ ActionController::Routing::Routes.draw do |map|
              :conditions => {:method => [:get, :post]}
   map.signout 'logout', :controller => 'account', :action => 'logout',
               :conditions => {:method => :get}
+  map.requestmembership 'projects/membershiprequest/:id', :controller => 'projects', :action => 'membershiprequest'
   map.connect 'account/register', :controller => 'account', :action => 'register',
               :conditions => {:method => [:get, :post]}
   map.connect 'account/lost_password', :controller => 'account', :action => 'lost_password',
