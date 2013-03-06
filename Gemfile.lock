@@ -23,6 +23,14 @@ GEM
       activesupport (= 2.3.14)
     activesupport (2.3.14)
     afm (0.2.0)
+    amq-client (0.9.12)
+      amq-protocol (>= 1.2.0)
+      eventmachine
+    amq-protocol (1.2.0)
+    amqp (0.9.9)
+      amq-client (~> 0.9.12)
+      amq-protocol (~> 1.2.0)
+      eventmachine
     autotest-rails (4.1.2)
       ZenTest (~> 4.5)
     builder (3.1.4)
@@ -139,6 +147,7 @@ DEPENDENCIES
   activerecord-jdbcmysql-adapter
   activerecord-jdbcpostgresql-adapter
   activerecord-jdbcsqlite3-adapter
+  amqp
   autotest-rails
   capybara (~> 1.1.0)
   coderay (~> 1.0.6)
