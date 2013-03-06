@@ -10,9 +10,6 @@
 [submodule "vendor/plugins/flow_start"]
 	path = vendor/plugins/flow_start
 	url = git://github.com/TYPO3/rm_flow_start.git
-[submodule "vendor/plugins/flow_svn_permissions"]
-	path = vendor/plugins/flow_svn_permissions
-	url = git://github.com/TYPO3/rm_flow_svn_permissions.git
 [submodule "vendor/plugins/forge_engines_patches"]
 	path = vendor/plugins/forge_engines_patches
 	url = git://github.com/TYPO3/rm_forge_engines_patches.git
