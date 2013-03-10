@@ -1,5 +1,6 @@
 /.project
 /.loadpath
+/.idea
 /config/additional_environment.rb
 /config/configuration.yml
 /config/database.yml
