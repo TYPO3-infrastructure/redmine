@@ -28,3 +28,6 @@
 [submodule "vendor/plugins/typo3_api"]
 	path = vendor/plugins/typo3_api
 	url = git://github.com/TYPO3/rm_typo3_api.git
+[submodule "vendor/plugins/typo3_find_user_by_login"]
+	path = vendor/plugins/typo3_find_user_by_login
+	url = git://github.com/TYPO3/rm_typo3_find_user_by_login.git
