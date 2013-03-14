@@ -128,7 +128,17 @@ class IssuesController < ApplicationController
   def new
     respond_to do |format|
       format.html { render :action => 'new', :layout => !request.xhr? }
-      format.js { render :template => 'issues/new.rhtml', :layout => FALSE }
+      format.js {
+        render(:update) { |page|
+          if params[:project_change]
+            page.replace_html 'all_attributes', :partial => 'form'
+          else
+            page.replace_html 'attributes', :partial => 'attributes'
+          end
+          m = User.current.allowed_to?(:log_time, @issue.project) ? 'show' : 'hide'
+          page << "if ($('log_time')) {Element.#{m}('log_time');}"
+        }
+      }
     end
   end
 
