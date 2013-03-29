@@ -1,4 +1,12 @@
 GIT
+  remote: git://github.com/ruby-amqp/bunny.git
+  revision: 0a5792af41101103f5b7032e32fc84e2197f9055
+  branch: master
+  specs:
+    bunny (0.9.0.pre9)
+      amq-protocol (>= 1.2.0)
+
+GIT
   remote: https://github.com/Vanuan/cucumber-rails.git
   revision: b31afa4a5e7dd3f3465e4666f452605ddfc8d7ed
   branch: cucumber-rails2_v0.3.3
@@ -7,26 +15,26 @@ GIT
       cucumber (~> 1.1.0)
 
 GEM
-  remote: http://rubygems.org/
+  remote: https://rubygems.org/
   remote: http://rubygems.org/
   specs:
     Ascii85 (1.0.2)
     ZenTest (4.5.0)
-    actionmailer (2.3.14)
-      actionpack (= 2.3.14)
-    actionpack (2.3.14)
-      activesupport (= 2.3.14)
+    actionmailer (2.3.18)
+      actionpack (= 2.3.18)
+    actionpack (2.3.18)
+      activesupport (= 2.3.18)
       rack (~> 1.1.0)
-    activerecord (2.3.14)
-      activesupport (= 2.3.14)
-    activeresource (2.3.14)
-      activesupport (= 2.3.14)
-    activesupport (2.3.14)
+    activerecord (2.3.18)
+      activesupport (= 2.3.18)
+    activeresource (2.3.18)
+      activesupport (= 2.3.18)
+    activesupport (2.3.18)
     afm (0.2.0)
+    amq-protocol (1.2.0)
     autotest-rails (4.1.2)
       ZenTest (~> 4.5)
     builder (3.1.4)
-    bunny (0.8.0)
     capybara (1.1.4)
       mime-types (>= 1.16)
       nokogiri (>= 1.3.3)
@@ -90,14 +98,14 @@ GEM
     rack (1.1.6)
     rack-test (0.6.2)
       rack (>= 1.0)
-    rails (2.3.14)
-      actionmailer (= 2.3.14)
-      actionpack (= 2.3.14)
-      activerecord (= 2.3.14)
-      activeresource (= 2.3.14)
-      activesupport (= 2.3.14)
+    rails (2.3.18)
+      actionmailer (= 2.3.18)
+      actionpack (= 2.3.18)
+      activerecord (= 2.3.18)
+      activeresource (= 2.3.18)
+      activesupport (= 2.3.18)
       rake (>= 0.8.3)
-    rake (10.0.3)
+    rake (10.0.4)
     rcov (1.0.0)
     rdoc (3.12.1)
       json (~> 1.4)
@@ -141,7 +149,7 @@ DEPENDENCIES
   activerecord-jdbcpostgresql-adapter
   activerecord-jdbcsqlite3-adapter
   autotest-rails
-  bunny
+  bunny!
   capybara (~> 1.1.0)
   coderay (~> 1.0.6)
   cucumber (= 1.1.0)
@@ -165,7 +173,7 @@ DEPENDENCIES
   pg (>= 0.11.0)
   poltergeist
   prawn
-  rails (= 2.3.14)
+  rails (= 2.3.18)
   rcov
   rdoc (>= 2.4.2)
   redgreen
