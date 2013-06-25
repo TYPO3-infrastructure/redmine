@@ -42,6 +42,13 @@ RewriteRule ^scripts/ - [L]
 
 # Redirect old (renamed) project URLs
 RewriteRule ^projects/team-infrastructure(.*)$ /projects/team-server-public$1 [R=301,L]
+RewriteRule ^projects/typo3-v5-core(.*)$ /projects/typo3neos-team$1 [R=301,L]
+RewriteRule ^projects/typo3-v5(.*)$ /projects/typo3neos$1 [R=301,L]
+RewriteRule ^projects/package-typo3-flow3(.*)$ /projects/package-typo3-flow$1 [R=301,L]
+RewriteRule ^projects/package-typo3-typo3(.*)$ /projects/package-typo3-neos$1 [R=301,L]
+RewriteRule ^projects/package-typo3-neos-contenttypes(.*)$ /projects/package-typo3-neos-nodetypes$1 [R=301,L]
+RewriteRule ^projects/package-twitter-bootstrap(.*)$ /projects/package-typo3-twitter-bootstrap$1 [R=301,L]
+RewriteRule ^projects/package-imagine(.*)$ /projects/package-typo3-imagine$1 [R=301,L]
 
 # If your Rails application is accessed via an Alias directive,
 # then you MUST also set the RewriteBase in this htaccess file.
