@@ -21,7 +21,7 @@
 	url = git://github.com/meineerde/redmine_wiki_css.git
 [submodule "vendor/plugins/redmine_backlogs"]
 	path = vendor/plugins/redmine_backlogs
-	url = git://github.com/backlogs/redmine_backlogs.git
+	url = git://github.com/TYPO3-infrastructure/redmine_backlogs.git
 [submodule "vendor/plugins/typo3_api"]
 	path = vendor/plugins/typo3_api
 	url = git://github.com/TYPO3/rm_typo3_api.git
