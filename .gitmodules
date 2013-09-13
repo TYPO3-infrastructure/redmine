@@ -1,30 +1,30 @@
 [submodule "vendor/plugins/flow_design_helpers"]
 	path = vendor/plugins/flow_design_helpers
-	url = git://github.com/TYPO3/rm_flow_design_helpers.git
+	url = https://github.com/TYPO3/rm_flow_design_helpers.git
 [submodule "vendor/plugins/flow_sso"]
 	path = vendor/plugins/flow_sso
-	url = git://github.com/TYPO3/rm_flow_sso.git
+	url = https://github.com/TYPO3/rm_flow_sso.git
 [submodule "vendor/plugins/flow_start"]
 	path = vendor/plugins/flow_start
-	url = git://github.com/TYPO3/rm_flow_start.git
+	url = https://github.com/TYPO3/rm_flow_start.git
 [submodule "vendor/plugins/forge_engines_patches"]
 	path = vendor/plugins/forge_engines_patches
-	url = git://github.com/TYPO3/rm_forge_engines_patches.git
+	url = https://github.com/TYPO3/rm_forge_engines_patches.git
 [submodule "vendor/plugins/forge_project_settings_menu_xclass"]
 	path = vendor/plugins/forge_project_settings_menu_xclass
-	url = git://github.com/TYPO3/rm_forge_project_settings_menu_xclass.git
+	url = https://github.com/TYPO3/rm_forge_project_settings_menu_xclass.git
 [submodule "vendor/plugins/redmine_forge_services"]
 	path = vendor/plugins/redmine_forge_services
-	url = git://github.com/TYPO3/rm_redmine_forge_services.git
+	url = https://github.com/TYPO3/rm_redmine_forge_services.git
 [submodule "vendor/plugins/redmine_wiki_css"]
 	path = vendor/plugins/redmine_wiki_css
-	url = git://github.com/meineerde/redmine_wiki_css.git
+	url = https://github.com/meineerde/redmine_wiki_css.git
 [submodule "vendor/plugins/redmine_backlogs"]
 	path = vendor/plugins/redmine_backlogs
-	url = git://github.com/TYPO3-infrastructure/redmine_backlogs.git
+	url = https://github.com/TYPO3-infrastructure/redmine_backlogs.git
 [submodule "vendor/plugins/typo3_api"]
 	path = vendor/plugins/typo3_api
-	url = git://github.com/TYPO3/rm_typo3_api.git
+	url = https://github.com/TYPO3/rm_typo3_api.git
 [submodule "vendor/plugins/typo3_find_user_by_login"]
 	path = vendor/plugins/typo3_find_user_by_login
-	url = git://github.com/TYPO3/rm_typo3_find_user_by_login.git
+	url = https://github.com/TYPO3/rm_typo3_find_user_by_login.git
