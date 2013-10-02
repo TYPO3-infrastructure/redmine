@@ -116,13 +116,18 @@ module ActionController
   end
 end
 
-# CVE-2012-2695
-# https://groups.google.com/group/rubyonrails-security/browse_thread/thread/9782f44c4540cf59
+# Fix for CVE-2013-0155
+# https://groups.google.com/d/msg/rubyonrails-security/c7jT-EeN9eI/L0u4e87zYGMJ
+# https://groups.google.com/d/msg/rubyonrails-security/kKGNeMrnmiY/r2yM7xy-G48J
+# https://github.com/rails/rails/blob/v2.3.15/activerecord/lib/active_record/base.rb#L2340
 module ActiveRecord
   class Base
     class << self
-      def sanitize_sql_hash_for_conditions(attrs, default_table_name = quoted_table_name, top_level = true)
+    protected
+      def self.sanitize_sql_hash_for_conditions(attrs, default_table_name = quoted_table_name, top_level = true)
         attrs = expand_hash_conditions_for_aggregates(attrs)
+
+        return '1 = 2' if !top_level && attrs.is_a?(Hash) && attrs.empty?
 
         conditions = attrs.map do |attr, value|
           table_name = default_table_name

@@ -1,6 +1,5 @@
 source "https://rubygems.org"
 
-
 gem "rails", "2.3.18"
 gem "i18n", "~> 0.4.2"
 gem "coderay", "~> 1.0.6"
@@ -41,7 +40,7 @@ end
 
 platforms :mri_18, :mingw_18 do
   group :mysql do
-    gem "mysql"
+    gem "mysql", "~> 2.8.1"
   end
 end
 
