@@ -5,7 +5,6 @@ gem "i18n", "~> 0.4.2"
 gem "coderay", "~> 1.0.6"
 gem "fastercsv", "~> 1.5.0", :platforms => [:mri_18, :mingw_18, :jruby]
 gem "tzinfo", "~> 0.3.31"
-gem "mysql"
 
 # Optional gem for LDAP authentication
 group :ldap do
