@@ -1,0 +1,14 @@
+--- app/views/projects/_form.html.erb
++++ app/views/projects/_form.html.erb
+@@ -17,6 +20,11 @@
+   <em class="info"><%= l(:text_length_between, :min => 1, :max => Project::IDENTIFIER_MAX_LENGTH) %> <%= l(:text_project_identifier_info).html_safe %></em>
+ <% end %></p>
+ <p><%= f.text_field :homepage, :size => 60 %></p>
++<p><%= f.text_area :quicklinks, :rows => 5 %></p>
++<p><%= f.file_field :topbarheaderimage %></p>
++<p><%= f.text_field :topbarbackgroundcolor, :rows => 5 %></p>
++<p><%= f.text_field :topbartextcolor, :rows => 5 %></p>
++
+ <p><%= f.check_box :is_public %></p>
+ <%= wikitoolbar_for 'project_description' %>
+ 

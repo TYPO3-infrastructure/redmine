@@ -1,0 +1,31 @@
+--- app/models/issue.rb
++++ app/models/issue.rb
+@@ -445,16 +469,18 @@
+ 
+     # Checks parent issue assignment
+     if @parent_issue
+-      if @parent_issue.project_id != project_id
+-        errors.add :parent_issue_id, :not_same_project
+-      elsif !new_record?
+-        # moving an existing issue
+-        if @parent_issue.root_id != root_id
+-          # we can always move to another tree
+-        elsif move_possible?(@parent_issue)
+-          # move accepted inside tree
+-        else
+-          errors.add :parent_issue_id, :not_a_valid_parent
++      unless Setting.cross_project_issue_relations?
++        if @parent_issue.project_id != project_id
++          errors.add :parent_issue_id, :not_same_project
++        elsif !new_record?
++          # moving an existing issue
++          if @parent_issue.root_id != root_id
++            # we can always move to another tree
++          elsif move_possible?(@parent_issue)
++            # move accepted inside tree
++          else
++            errors.add :parent_issue_id, :not_a_valid_parent
++          end
+         end
+       end
+     end

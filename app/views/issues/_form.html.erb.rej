@@ -1,0 +1,10 @@
+--- app/views/issues/_form.html.erb
++++ app/views/issues/_form.html.erb
+@@ -16,6 +16,7 @@
+ <% if @issue.safe_attribute? 'tracker_id' %>
+ <p><%= f.select :tracker_id, @issue.project.trackers.collect {|t| [t.name, t.id]}, :required => true %></p>
+ <%= observe_field :issue_tracker_id, :url => project_issue_form_path(@project, :id => @issue),
++                                     :update => :project,
+                                      :with => "Form.serialize('issue-form')" %>
+ <% end %>
+ 

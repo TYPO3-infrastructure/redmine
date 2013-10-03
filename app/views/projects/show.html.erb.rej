@@ -1,0 +1,43 @@
+--- app/views/projects/show.html.erb
++++ app/views/projects/show.html.erb
+@@ -4,29 +4,25 @@
+   <% end %>
+ </div>
+ 
+-<h2><%=l(:label_overview)%></h2>
++<% if ! @subprojects.any? %><h2><%=l(:label_overview)%></h2><% end %>
++<% if ! @project.is_public? %>
++  <p><b>Your project is still hidden!</b><br />Please unhide it by checking Settings->Information->Public.</p>
++<% end %>
++<% if @subprojects.any? %>
++  <%= textilizable @project.description %>
++<% end %>
+ 
+ <div class="splitcontentleft">
++  <% if @subprojects.empty? %>
+   <div class="wiki">
+     <%= textilizable @project.description %>
+   </div>
+-  <ul>
+-  <% unless @project.homepage.blank? %>
+-    <li><%=l(:field_homepage)%>: <%= auto_link(h(@project.homepage)).html_safe %></li>
+-  <% end %>
+-  <% if @subprojects.any? %>
+-    <li><%=l(:label_subproject_plural)%>:
+-      <%= @subprojects.collect{|p| link_to(h(p), :action => 'show', :id => p)}.join(", ").html_safe %></li>
+-  <% end %>
+-  <% @project.visible_custom_field_values.each do |custom_value| %>
+-  <% if !custom_value.value.blank? %>
+-     <li><%=h custom_value.custom_field.name %>: <%=h show_value(custom_value) %></li>
+   <% end %>
++  <% unless @project.homepage.blank? %>
++    <ul><li><%=l(:field_homepage)%>: <%= auto_link(h(@project.homepage)) %></li></ul>
+   <% end %>
+-  </ul>
+-
+   <% if User.current.allowed_to?(:view_issues, @project) %>
+-  <div class="issues box">
++  <div class="issues box">  
+     <h3><%=l(:label_issue_tracking)%></h3>
+     <ul>
+     <% for tracker in @trackers %>
