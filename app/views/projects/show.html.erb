@@ -61,11 +61,66 @@
   </div>
   <% end %>
   <%= call_hook(:view_projects_show_left, :project => @project) %>
+  <!-- activities -->
+  <% if @events_by_day && @events_by_day.any?  %><!-- && authorize_for('activity', 'index') DOES NOT WORK YET -->
+  <div class="box project-activity-container">
+    <h3 class="icon22 icon22-tracker">Recent activities</h3>
+      <% @events_by_day.keys.sort {|x,y| y <=> x }.each do |day| %>
+      <h4><%= day_name(day.cwday) %> <%= day.day %></h4>
+      <dl>
+        <% @events_by_day[day].sort {|x,y| y.event_datetime <=> x.event_datetime }.each do |e| -%>
+        <dt class="<%= e.class.name.downcase %> <%= cycle('odd', 'even') %>">
+        <%= link_to truncate(h(e.event_title), 100), e.event_url %>  <span class="author"><%= e.event_author if e.respond_to?(:event_author) %></span></dt>
+        <% end -%>
+      </dl>
+    <% end -%>
+  </div>
+  <% end %>
 </div>
 
-<div class="splitcontentright">
-  <%= render :partial => 'members_box' %>
-
+<div class="splitcontentright project-listing">
+  <!-- START MEMBER BOX; alternative, use  render :partial => 'members_box' -->
+  <% if @users_by_role.any? %>
+    <div class="box project-member-container">
+      <h3 class="icon22 icon22-users"><%=l(:label_member_plural)%></h3>
+      <% @users_by_role.keys.sort_by{|role|
+        result = case role.name
+                 when 'Leader'
+                   1
+                 when 'Co-Leader'
+                   5
+                 when 'Member'
+                   10
+                 when 'Inactive Member'
+                   15
+                 when 'Pending Member'
+                   20
+                 else
+                   100
+                 end
+        result
+      }.each do |role| %>
+      <p class="role">
+      <h4><%= role.name %></h4>
+      <% @users_by_role[role].sort.each do |user| %>
+        <div class="role-user">
+          <%= link_to_user_with_image user, 1 %>
+        </div>
+      <% end %>
+      <div class="clearer"></div>
+      </p>
+    <% end %>
+    <% if User.current.logged? && !User.current.member_of?(@project) %>
+      <b><a href="javascript:void(0);" id="joinProjectLink">Join Project</a></b>
+      <div id="want-to-help" style="display:none">
+        <% remote_form_for :membership, :url => { :controller => 'projects', :action => 'membershiprequest', :id => @project.identifier }, :update => 'want-to-help' do %> 
+          How do you want to help:<br /><textarea id="team-membership-request-comment" name="description" style="height:inherit; width:99.5%" rows="2"></textarea><br />
+          <%= submit_tag 'Submit team membership request' %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <% end %>
   <% if @news.any? && authorize_for('news', 'index') %>
   <div class="news box">
     <h3><%=l(:label_news_latest)%></h3>

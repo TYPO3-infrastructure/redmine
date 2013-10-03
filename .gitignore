@@ -17,6 +17,7 @@
 /log/mongrel_debug
 /public/dispatch.*
 /public/plugin_assets
+/public/images/headerimages*
 /tmp/*
 /tmp/cache/*
 /tmp/pdf/*

@@ -18,10 +18,10 @@
 class ProjectsController < ApplicationController
   menu_item :overview
   menu_item :roadmap, :only => :roadmap
-  menu_item :settings, :only => :settings
+  menu_item :settings, :only => [:settings, :auto_complete_for_user_login]
 
   before_filter :find_project, :except => [ :index, :list, :new, :create, :copy ]
-  before_filter :authorize, :except => [ :index, :list, :new, :create, :copy, :archive, :unarchive, :destroy]
+  before_filter :authorize, :except => [ :index, :list, :new, :create, :copy, :archive, :unarchive, :destroy, :auto_complete_for_user_login, :membershiprequest ]
   before_filter :authorize_global, :only => [:new, :create]
   before_filter :require_admin, :only => [ :copy, :archive, :unarchive, :destroy ]
   accept_rss_auth :index
@@ -44,6 +44,16 @@ class ProjectsController < ApplicationController
   include RepositoriesHelper
   include ProjectsHelper
   helper :members
+
+  def auto_complete_for_user_login
+    return if not  User.current.allowed_to?(:manage_members, @project)
+    find_options = {
+          :conditions => [ "LOWER(login) LIKE ?", '%' + params[:user][:login].downcase + '%' ],
+          :order => "login ASC",
+          :limit => 10 }
+    @items = User.find(:all, find_options)
+    render :inline => "<%= auto_complete_result @items, 'login' %>"
+  end
 
   # Lists visible projects
   def index
@@ -166,6 +176,16 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def membershiprequest
+    # TODO: role_id 11 is currently hard coded!!
+    @project.members << Member.new(:user_id => User.current.id, :role_ids => [ 11 ]) if request.post?
+
+    # Send email
+    Mailer.deliver_project_membership_request(@project, User.current, params[:description])
+    render :text => "We have received your request and will review it soon!"
+  end
+
+  
   def settings
     @issue_custom_fields = IssueCustomField.sorted.all
     @issue_category ||= IssueCategory.new
@@ -244,6 +264,61 @@ class ProjectsController < ApplicationController
   end
 
   private
+
+  def activity (customtimespan = 0)
+    if customtimespan != 0
+      @days = customtimespan
+    else
+      @days = Setting.activity_days_default.to_i
+    end
+
+    if params[:from]
+      begin; @date_to = params[:from].to_date + 1; rescue; end
+    end
+
+    @date_to ||= Date.today + 1
+    @date_from = @date_to - @days
+    @with_subprojects = params[:with_subprojects].nil? ? Setting.display_subprojects_issues? : (params[:with_subprojects] == '1')
+    @author = (params[:user_id].blank? ? nil : User.active.find(params[:user_id]))
+    
+    @activity = Redmine::Activity::Fetcher.new(User.current, :project => @project, 
+                                                             :with_subprojects => @with_subprojects,
+                                                             :author => @author)
+    @activity.scope_select {|t| !params["show_#{t}"].nil?}
+    @activity.scope = (@author.nil? ? :default : :all) if @activity.scope.empty?
+
+    events = @activity.events(@date_from, @date_to)
+    
+    if events.empty? || stale?(:etag => [events.first, User.current])
+      respond_to do |format|
+        format.html { 
+          @events_by_day = events.group_by(&:event_date)
+          render :layout => false if request.xhr?
+        }
+        format.atom {
+          title = l(:label_activity)
+          if @author
+            title = @author.name
+          elsif @activity.scope.size == 1
+            title = l("label_#{@activity.scope.first.singularize}_plural")
+          end
+          render_feed(events, :title => "#{@project || Setting.app_title}: #{title}")
+        }
+      end
+    end
+
+  rescue ActiveRecord::RecordNotFound
+    render_404
+  end
+  
+private
+  def find_optional_project
+    return true unless params[:id]
+    @project = Project.find(params[:id])
+    authorize
+  rescue ActiveRecord::RecordNotFound
+    render_404
+  end
 
   # Validates parent_id param according to user's permissions
   # TODO: move it to Project model in a validation that depends on User.current

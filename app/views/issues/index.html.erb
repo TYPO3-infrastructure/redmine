@@ -3,6 +3,7 @@
   <%= link_to l(:button_edit), edit_query_path(@query), :class => 'icon icon-edit' %>
   <%= delete_link query_path(@query) %>
 <% end %>
+  <%= link_to_if_authorized l(:label_issue_new), {:controller => 'issues', :action => 'new', :project_id => @project, :copy_from => @issue }, :class => 'icon icon-add' %>
 </div>
 
 <h2><%= @query.new_record? ? l(:label_issue_plural) : h(@query.name) %></h2>
