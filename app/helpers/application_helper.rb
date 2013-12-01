@@ -89,7 +89,7 @@ module ApplicationHelper
     else
       imageFile = '_dummy'
     end
-    userimage = "http://typo3.org/fileadmin/userimages/#{imageFile}-#{imageSize}.jpg"
+    userimage = "//typo3.org/fileadmin/userimages/#{imageFile}-#{imageSize}.jpg"
     "<img src='#{userimage}' class='userimage userimage-#{size}' />"
   end
 
