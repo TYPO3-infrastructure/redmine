@@ -8,12 +8,6 @@
   <%= hidden_field_tag 'copy_from', params[:copy_from] if params[:copy_from] %>
   <div class="box tabular">
     <div id="all_attributes">
-    <p>
-      <%= f.select "project_id", project_tree_options_for_select(Project.visible.all, :selected => @issue.project), :required => true %>
-    </p>
-    <%= observe_field :issue_project_id, :url => { :action => :new, :project_id => @project, :id => @issue },
-                                         :update => 'content',
-                                         :with => "Form.serialize('issue-form')" %>
     <%= render :partial => 'issues/form', :locals => {:f => f} %>
     </div>
 
