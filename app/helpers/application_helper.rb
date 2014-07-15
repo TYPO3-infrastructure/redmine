@@ -679,7 +679,6 @@ module ApplicationHelper
   # Examples:
   #   Issues:
   #     #52 -> Link to issue #52
-  #     #M52 -> Link to Mantis issue #52
   #   Changesets:
   #     r52 -> Link to revision 52
   #     commit:a85130f -> Link to scmid starting with a85130f
@@ -708,7 +707,7 @@ module ApplicationHelper
   #     identifier:version:1.0.0
   #     identifier:source:some/file
   def parse_redmine_links(text, project, obj, attr, only_path, options)
-    text.gsub!(%r{([\s\(,\-\[\>]|^)(!)?(attachment|document|version|commit|source|export|message|project)?((#|#M|r)(\d+)|(:)([^"\s<>][^\s<>]*?|"[^"]+?"))(?=(?=[[:punct:]]\W)|,|\s|\]|<|$)}) do |m|
+    text.gsub!(%r{([\s\(,\-\[\>]|^)(!)?(([a-z0-9\-_]+):)?(attachment|document|version|forum|news|message|project|commit|source|export)?(((#)|((([a-z0-9\-]+)\|)?(r)))((\d+)((#note)?-(\d+))?)|(:)([^"\s<>][^\s<>]*?|"[^"]+?"))(?=(?=[[:punct:]][^A-Za-z0-9_/])|,|\s|\]|<|$)}) do |m|
       leading, esc, project_prefix, project_identifier, prefix, repo_prefix, repo_identifier, sep, identifier, comment_suffix, comment_id = $1, $2, $3, $4, $5, $10, $11, $8 || $12 || $18, $14 || $19, $15, $17
       link = nil
       if project_identifier
@@ -730,10 +729,6 @@ module ApplicationHelper
                                         :title => truncate_single_line(changeset.comments, :length => 100))
             end
           end
-        elsif sep == '#M'
-          # Link to a Mantis issue
-          oid = identifier.to_i
-          link = link_to("#M#{oid}", "http://bugs.typo3.org/view.php?id=" + identifier)
         elsif sep == '#'
           oid = identifier.to_i
           case prefix
@@ -969,8 +964,8 @@ module ApplicationHelper
     options = args.last
     options[:html] ||= {}
     options[:html][:class] = 'tabular' unless options[:html].has_key?(:class)
-    options[:html][:multipart] = true
-    form_for(name, object, options.merge({ :builder => TabularFormBuilder, :lang => current_language}), &proc)
+    options.merge!({:builder => Redmine::Views::LabelledFormBuilder})
+    form_for(*args, &proc)
   end
 
   def labelled_form_for(*args, &proc)
