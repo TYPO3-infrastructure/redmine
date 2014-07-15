@@ -13,6 +13,9 @@ Deny From 14.212.130.200
 RewriteCond %{HTTP_USER_AGENT} 80legs
 RewriteRule ^.*$ - [F]
 
+# Prevent click-jacking http://forge.typo3.org/issues/54837
+Header add X-Frame-Options "SAMEORIGIN"
+
 # Expire headers
 # Source: http://www.vtek.nl/solution-for-slow-redmine-performance/
 ### TODO: Turn this on after migration is completed
