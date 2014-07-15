@@ -1,5 +1,17 @@
+Deny From 41.66.41.106
+Deny From 141.8.147.14
+
 # baidu spider
 #Deny From 180.76.5
+Deny From 139.18.38.221
+Deny From 41.207.203.181
+
+Deny From 2.49.206.84
+Deny From 14.212.130.200
+
+# this bot is distributed and f***ing aggressive
+RewriteCond %{HTTP_USER_AGENT} 80legs
+RewriteRule ^.*$ - [F]
 
 # Expire headers
 # Source: http://www.vtek.nl/solution-for-slow-redmine-performance/
