@@ -59,6 +59,7 @@ RewriteRule ^projects/(show/)(.*)$	/projects/$2 [R=301,L]
 
 # Redirect old (renamed) project URLs
 RewriteRule ^projects/team-infrastructure(.*)$			/projects/team-server-public$1			[R=301,L]
+RewriteRule ^projects/team-t3o-relaunch-week(|/.*)$		/projects/team-t3o$1				[R=301,L]
 RewriteRule ^projects/typo3-v5-core(|/.*)$			/projects/typo3neos-team$1			[R=301,L]
 RewriteRule ^projects/typo3-v5(|/.*)$				/projects/typo3neos$1				[R=301,L]
 RewriteRule ^projects/typo3v4(|/.*)$				/projects/typo3-cms$1				[R=301,L]
