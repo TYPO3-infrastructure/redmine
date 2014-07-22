@@ -28,3 +28,6 @@
 [submodule "vendor/plugins/typo3_find_user_by_login"]
 	path = vendor/plugins/typo3_find_user_by_login
 	url = https://github.com/TYPO3-infrastructure/rm_typo3_find_user_by_login.git
+[submodule "vendor/plugins/redmine_drafts"]
+	path = vendor/plugins/redmine_drafts
+	url = https://github.com/jbbarth/redmine_drafts.git
