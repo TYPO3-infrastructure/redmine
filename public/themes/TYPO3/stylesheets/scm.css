@@ -180,3 +180,6 @@ ol.CodeRay li { white-space: pre }
 .CodeRay .ty { color:#339; font-weight:bold }
 .CodeRay .v  { color:#036 }
 .CodeRay .xt { color:#444 }
+
+/* Disable the revision graph (it does not work and breaks the layout) */
+div.revision-graph { display: none }
