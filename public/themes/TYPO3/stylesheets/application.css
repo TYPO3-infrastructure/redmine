@@ -277,19 +277,39 @@ input, textarea, select {
   background-color:#FBC3C3;
 }
 
-/* Under Review */
+/* On Hold */
 .status-5 .status {
   background-color:#D1F412;
 }
 
-/* Resolved */
+/* Under Review */
 .status-6 .status {
   background-color:#aeff91;
 }
 
-/* Closed */
+/* Resolved */
 .status-7 .status {
   background-color:#e6e6e6;
+}
+
+/* Ready for Deployment */
+.status-8 .status {
+  background-color:#ffffff;
+}
+
+/* Closed */
+.status-9 .status {
+  background-color:#ffffff;
+}
+
+/* Rejected */
+.status-10 .status {
+  background-color:#ffffff;
+}
+
+/* Postponed */
+.status-11 .status {
+  background-color:#ffffff;
 }
 
 /***** CGL Checks */
