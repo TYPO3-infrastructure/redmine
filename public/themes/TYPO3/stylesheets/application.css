@@ -267,23 +267,28 @@ input, textarea, select {
   background-color:#fbee99;
 }
 
-/* Needs Feedback */
+/* In Progress */
 .status-3 .status {
+  background-color:#A9E2FF;
+}
+
+/* Needs Feedback */
+.status-4 .status {
   background-color:#FBC3C3;
 }
 
 /* Under Review */
-.status-4 .status {
+.status-5 .status {
   background-color:#D1F412;
 }
 
 /* Resolved */
-.status-5 .status {
+.status-6 .status {
   background-color:#aeff91;
 }
 
 /* Closed */
-.status-6 .status {
+.status-7 .status {
   background-color:#e6e6e6;
 }
 
