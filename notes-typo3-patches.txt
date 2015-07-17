@@ -1,0 +1,12 @@
+just some notes/scetches of current patches/adaptions to the redmine codebase we could identify
+
+* Hoptoad -> raus!
+* Headerimages -> ???
+* REST-API Limit größer 100 -> in Plugin Methode überladen
+* Issue-Controller
+** Template/Partial überschrieben -> ???
+* Project-Controller:
+** autocomplete_for_user_login (add autocomplete in settings/members), nutzt nicht(!) das autocomplete plugin -> ???
+* membershiprequest -> ???
+* Locales:
+** in Plugins überschreiben
