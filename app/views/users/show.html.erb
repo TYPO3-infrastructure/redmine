@@ -8,11 +8,6 @@
 <p>
 <%= output_user_image @user, 2 %>
 </p>
-<% if @user.signed_cla? %>
-  <p>has signed the <a href="http://typo3.org/about/licenses/">Contributor License Agreement</a></p>
-<% else %>
-  <p><b>has not signed the <a href="http://typo3.org/about/licenses/">Contributor License Agreement</a></b></p>
-<% end %>
 <p>
 <%= format_mail @user %>
 
