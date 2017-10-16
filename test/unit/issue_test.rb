@@ -605,6 +605,18 @@ class IssueTest < ActiveSupport::TestCase
     assert_equal version, issue.fixed_version
   end
 
+  def test_default_assigned_to_with_required_assignee_should_validate
+    category = IssueCategory.create!(:project_id => 1, :name => 'With default assignee', :assigned_to_id => 3)
+    Issue.any_instance.stubs(:required_attribute_names).returns(['assigned_to_id'])
+
+    issue = Issue.new(:project_id => 1, :tracker_id => 1, :author_id => 1, :subject => 'Default')
+    assert !issue.save
+    assert issue.errors['assigned_to_id'].present?
+
+    issue = Issue.new(:project_id => 1, :tracker_id => 1, :author_id => 1, :subject => 'Default', :category_id => category.id)
+    assert_save issue
+  end
+
   def test_should_not_update_custom_fields_on_changing_tracker_with_different_custom_fields
     issue = Issue.create!(:project_id => 1, :tracker_id => 1, :author_id => 1,
                           :status_id => 1, :subject => 'Test',
@@ -2230,11 +2242,13 @@ class IssueTest < ActiveSupport::TestCase
   end
 
   def test_overdue
-    assert Issue.new(:due_date => 1.day.ago.to_date).overdue?
-    assert !Issue.new(:due_date => Date.today).overdue?
-    assert !Issue.new(:due_date => 1.day.from_now.to_date).overdue?
+    User.current = nil
+    today = User.current.today
+    assert  Issue.new(:due_date => (today - 1.day).to_date).overdue?
+    assert !Issue.new(:due_date => today).overdue?
+    assert !Issue.new(:due_date => (today + 1.day).to_date).overdue?
     assert !Issue.new(:due_date => nil).overdue?
-    assert !Issue.new(:due_date => 1.day.ago.to_date,
+    assert !Issue.new(:due_date => (today - 1.day).to_date,
                       :status => IssueStatus.where(:is_closed => true).first
                       ).overdue?
   end
