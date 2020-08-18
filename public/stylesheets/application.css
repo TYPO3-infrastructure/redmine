@@ -384,8 +384,8 @@ div.issue {background:#ffffdd; padding:6px; margin-bottom:6px; border: 1px solid
 p.breadcrumb { font-size: 0.9em; margin: 4px 0 4px 0;}
 p.subtitle { font-size: 0.9em; margin: -6px 0 12px 0; font-style: italic; }
 p.footnote { font-size: 0.9em; margin-top: 0px; margin-bottom: 0px; }
-.ltr {direction:ltr !important; unicode-bidi:bidi-override;}
-.rtl {direction:rtl !important; unicode-bidi:bidi-override;}
+.wiki-class-ltr {direction:ltr !important;}
+.wiki-class-rtl {direction:rtl !important;}
 
 div.issue div.subject div div { padding-left: 16px; }
 div.issue div.subject p {margin: 0; margin-bottom: 0.1em; font-size: 90%; color: #999;}
@@ -634,7 +634,7 @@ label.no-css {
 }
 input#time_entry_comments { width: 90%;}
 
-#preview fieldset {margin-top: 1em; background: url(../images/draft.png)}
+fieldset.preview {margin-top: 1em; min-width: inherit; background: url(../images/draft.png)}
 
 .tabular.settings p{ padding-left: 300px; }
 .tabular.settings label{ margin-left: -300px; width: 295px; }
@@ -1038,7 +1038,7 @@ div.wiki ul.toc a:hover { color: #c61a1a; text-decoration: underline;}
 
 a.wiki-anchor { display: none; margin-left: 6px; text-decoration: none; }
 a.wiki-anchor:hover { color: #aaa !important; text-decoration: none; }
-h1:hover a.wiki-anchor, h2:hover a.wiki-anchor, h3:hover a.wiki-anchor { display: inline; color: #ddd; }
+h1:hover a.wiki-anchor, h2:hover a.wiki-anchor, h3:hover a.wiki-anchor, h4:hover a.wiki-anchor, h5:hover a.wiki-anchor, h6:hover a.wiki-anchor { display: inline; color: #ddd; }
 
 div.wiki img {vertical-align:middle; max-width:100%;}
 
