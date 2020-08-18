@@ -4,7 +4,7 @@ if Gem::Version.new(Bundler::VERSION) < Gem::Version.new('1.5.0')
   abort "Redmine requires Bundler 1.5.0 or higher (you're using #{Bundler::VERSION}).\nPlease update with 'gem update bundler'."
 end
 
-gem "rails", "4.2.11"
+gem "rails", "4.2.11.1"
 gem "addressable", "2.4.0" if RUBY_VERSION < "2.0"
 if RUBY_VERSION < "2.1"
   gem "public_suffix", (RUBY_VERSION < "2.0" ? "~> 1.4" : "~> 2.0.5")
@@ -40,7 +40,7 @@ end
 
 # Optional gem for OpenID authentication
 group :openid do
-  gem "ruby-openid", "~> 2.3.0", :require => "openid"
+  gem "ruby-openid", "~> 2.9.2", :require => "openid"
   gem "rack-openid"
 end
 
