@@ -6,6 +6,9 @@ end
 
 gem "rails", "4.2.7.1"
 gem "addressable", "2.4.0" if RUBY_VERSION < "2.0"
+if RUBY_VERSION < "2.1"
+  gem "public_suffix", (RUBY_VERSION < "2.0" ? "~> 1.4" : "~> 2.0.5")
+end
 gem "jquery-rails", "~> 3.1.4"
 gem "coderay", "~> 1.1.1"
 gem "builder", ">= 3.0.4"
@@ -17,6 +20,7 @@ gem "actionpack-xml_parser"
 gem "roadie-rails", "~> 1.1.1"
 gem "roadie", "~> 3.2.1"
 gem "mimemagic"
+gem "mail", "~> 2.6.4"
 
 gem "nokogiri", (RUBY_VERSION >= "2.1" ? "~> 1.7.2" : "~> 1.6.8")
 gem "i18n", "~> 0.7.0"
